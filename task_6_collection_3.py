@@ -1,27 +1,40 @@
-"""
-Задание №6
-Погружение в Python | Коллекции
-Пользователь вводит строку текста. Вывести каждое слово с новой строки.
-✔ Строки нумеруются начиная с единицы.
-✔ Слова выводятся отсортированными согласно кодировки Unicode.
-✔ Текст выравнивается по правому краю так, чтобы у самого длинного
-слова был один пробел между ним и номером строки.
-"""
+import logging
 
-# мы можем выровнять строку,
-# используя {переменная:>N} где N – это общая длина
+FILENAME = "logs/logfile_task_6.log"
+FILEMODE = 'w'
+FORMAT = '%(levelname)s - %(asctime)s - %(message)s'
+ENCODING = 'utf-8'
 
-# решение 1
-text = "vsdsdsdsdsds dfsfdf fdfdfd fdfdfd".split()
-shift = len(max(text))
-for n, el in enumerate(sorted(text), 1):
-    print(f"{n}. {el:>{shift}}")
+# Настройка логгера
+logging.basicConfig(filename=FILENAME,
+                    filemode=FILEMODE,
+                    format=FORMAT,
+                    encoding=ENCODING,
+                    level=logging.DEBUG)
 
-print()
+logger = logging.getLogger(__name__)
 
-# решение 2
-text = "vsdsdsdsdsds dfsfdf fdfdfd fdfdfd".split()
-max_len = len(max(text, key=len))
-sorted_words = sorted(text, key=lambda el: el.lower())
-for n, el in enumerate(sorted_words, 1):
-    print(f'{n}.{el.rjust(max_len + 1)}')
+
+def print_words_aligned(text):
+    shift = len(max(text, key=len))
+    for n, word in enumerate(sorted(text), 1):
+        logger.info(f'{n}. {word:>{shift}}')
+        print(f"{n}. {word:>{shift}}")
+
+
+if __name__ == '__main__':
+    """
+    Задание №6
+    Пользователь вводит строку текста. Вывести каждое слово с новой строки.
+    ✔ Строки нумеруются начиная с единицы.
+    ✔ Слова выводятся отсортированными согласно кодировки Unicode.
+    ✔ Текст выравнивается по правому краю так, чтобы у самого длинного
+    слова был один пробел между ним и номером строки.
+    """
+
+    try:
+        user_input = input("Введите строку текста: ")
+        words = user_input.split()
+        print_words_aligned(words)
+    except Exception as e:
+        logger.error(f'Произошла ошибка - {e}')
