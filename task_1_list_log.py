@@ -11,6 +11,7 @@ ENCODING = 'utf-8'
 logging.basicConfig(filename=FILENAME,
                     filemode=FILEMODE,
                     format=FORMAT,
+                    style=STYLE,
                     encoding=ENCODING,
                     level=logging.DEBUG)
 
@@ -20,10 +21,10 @@ logger = logging.getLogger(__name__)
 def unique_elements(lst):
     try:
         unique_lst = list(set(lst))
-        logging.info(f'Уникальный список - {unique_lst}')
+        logger.info(f'Уникальный список - {unique_lst}')
         return unique_lst
     except Exception as e:
-        logging.error(f'Произошла ошибка - {e}')
+        logger.error(f'Произошла ошибка - {e}')
         return None
 
 
@@ -48,6 +49,6 @@ if __name__ == '__main__':
                 continue
             else:
                 new_lst.append(el)
-        logging.info(f'Уникальный список - {new_lst}')
+        logger.info(f'Уникальный список - {new_lst}')
     except Exception as e:
-        logging.error(f'Произошла ошибка - {e}')
+        logger.error(f'Произошла ошибка - {e}')
